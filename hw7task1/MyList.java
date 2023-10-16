@@ -6,16 +6,16 @@ public class MyList<T> {
     private Object[] container;
 
     private int capacity;
-    private int size;
+    private int index;
 
     public MyList() {
         capacity = 10;
-        size = 0;
+        index = 0;
         container = new Object[capacity];
     }
 
     public void addElement(T element) {
-        if (size == capacity - 1) {
+        if (index == capacity - 1) {
             Object[] temp;
             temp = new Object[capacity + capacity/2];
             for (int i = 0; i < container.length; i++) {
@@ -23,20 +23,20 @@ public class MyList<T> {
             }
             container = temp;
         }
-        container[size] = element;
-        size++;
+        container[index] = element;
+        index++;
     }
 
-    public T getElementByIndex(int index) {
-        return (T)container[index];
+    public T getElementByIndex(int indexToFind) {
+        return indexToFind >=  0 && indexToFind <= index ?   (T)container[index] : null;
     }
 
     public int getSize() {
-        return size;
+        return index;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.copyOf(container, size));
+        return Arrays.toString(Arrays.copyOf(container, index));
     }
 }
