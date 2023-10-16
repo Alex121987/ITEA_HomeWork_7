@@ -1,27 +1,27 @@
 package hw7task2;
 
-public class Node <Type1, Type2> {
-    private Type1 key;
-    private Type2 value;
+public class Node<K, V> {
+    private K key;
+    private V value;
 
-    public Node(Type1 key, Type2 value) {
+    public Node(K key, V value) {
         this.key = key;
         this.value = value;
     }
 
-    public Type1 getKey() {
+    public K getKey() {
         return key;
     }
 
-    public void setKey(Type1 key) {
+    public void setKey(K key) {
         this.key = key;
     }
 
-    public Type2 getValue() {
+    public V getValue() {
         return value;
     }
 
-    public void setValue(Type2 value) {
+    public void setValue(V value) {
         this.value = value;
     }
 

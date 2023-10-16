@@ -2,30 +2,30 @@ package hw7task2;
 
 import java.util.Arrays;
 
-public class MyDictionary <Type1, Type2> {
+public class MyDictionary<K, V> {
 
     private Node[] container;
     private int capacity;
-    private int size;
+    private int index;
 
     public MyDictionary() {
         // create empty MAP with 10 empty elements
         capacity = 10;
-        size = 0;
+        index = 0;
         container = new Node[capacity];
     }
 
-    public void put(Type1 key, Type2 value) {
-        if (size == capacity - 1) {
+    public void put(K key, V value) {
+        if (index == capacity - 1) {
             Node[] temp;
             temp = new Node[capacity + capacity/2];
             System.arraycopy(container, 0, temp, 0, container.length);
             container = temp;
         }
 
-        if (size == 0 || (size > 0 && !mapContainsKey(key))) {
-            container[size] = new Node(key, value);
-            size++;
+        if (index == 0 || (index > 0 && !mapContainsKey(key))) {
+            container[index] = new Node(key, value);
+            index++;
         }
 
         if (mapContainsKey(key)) {
@@ -38,32 +38,30 @@ public class MyDictionary <Type1, Type2> {
         }
     }
 
-    public Type2 getValueByKey(Type1 key) {
+    public V getValueByKey(K key) {
         for (Node node: container) {
             if (node.getKey() == key) {
-                return (Type2)node.getValue();
+                return (V)node.getValue();
             }
         }
         return null;
     }
 
-    private boolean mapContainsKey(Type1 key) {
-        boolean contains = false;
-        for (int i = 0; i < size; i++) {
+    private boolean mapContainsKey(K key) {
+        for (int i = 0; i < index; i++) {
             if (container[i].getKey() == key) {
-                contains = true;
-                break;
+                return true;
             }
         }
-        return contains;
+        return false;
     }
 
     public int getSize() {
-        return size;
+        return index;
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(Arrays.copyOf(container, size));
+        return Arrays.toString(Arrays.copyOf(container, index));
     }
 }
