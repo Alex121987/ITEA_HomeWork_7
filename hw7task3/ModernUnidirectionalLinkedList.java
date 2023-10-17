@@ -45,15 +45,15 @@ public class ModernUnidirectionalLinkedList<T> {
             insertHead(data);
         } else {
             Node<T> prevNode = first;
-            Node<T> currentNode = first.getNextNode();
+            Node<T> currentNode = first;
 
             while(currentNode.getIndexOfNode() != index) {
                 prevNode = currentNode;
                 currentNode = currentNode.getNextNode();
             }
 
-            prevNode.setNextNode(new Node<T>(data, currentNode, index));
-            prevNode.getNextNode().setNextNode(currentNode);
+            Node<T> newNode = new Node<T>(data, currentNode, index);
+            prevNode.setNextNode(newNode);
             size++;
 
             while(currentNode != null) {
@@ -63,7 +63,26 @@ public class ModernUnidirectionalLinkedList<T> {
         }
     }
     public void remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Wrong index in method:".toUpperCase() + "add(final int index, final T data)!");
+        }
 
+        if (size == 1) {
+            first = null;
+            last = null;
+            size--;
+        } else {
+            Node<T> prevNode = first;
+            Node<T> current = first;
+
+            while(current.getIndexOfNode() != index) {
+                prevNode = current;
+                current = current.getNextNode();
+            }
+
+            prevNode.setNextNode(current.getNextNode());
+            size--;
+        }
     }
     public void remove(T data) {
 
@@ -79,6 +98,7 @@ public class ModernUnidirectionalLinkedList<T> {
             currentNode = currentNode.getNextNode();
         }
     }
+
     //**************************************************
     public Node<T> getFirst() {
         return first;
