@@ -1,20 +1,21 @@
 package hw7task3;
 
 public class Node<T> {
-    private Node nextNode;
+    private Node<T> nextNode;
     private T value;
-    private int indexOfNode = 0;
+    private int indexOfNode;
 
-    public Node(Node nextNode, T value) {
+    public Node(T value, Node<T> nextNode, int indexOfNode) {
         this.nextNode = nextNode;
         this.value = value;
+        this.indexOfNode = indexOfNode;
     }
 
-    public Node getNextNode() {
+    public Node<T> getNextNode() {
         return nextNode;
     }
 
-    public void setNextNode(Node nextNode) {
+    public void setNextNode(Node<T> nextNode) {
         this.nextNode = nextNode;
     }
 
@@ -32,5 +33,13 @@ public class Node<T> {
 
     public void setIndexOfNode(int indexOfNode) {
         this.indexOfNode = indexOfNode;
+    }
+
+    @Override
+    public String toString() {
+        return "Node{" +
+                "value=" + value +
+                ", indexOfNode=" + indexOfNode +
+                '}';
     }
 }
