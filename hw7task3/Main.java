@@ -4,11 +4,13 @@ public class Main {
     public static void main(String[] args) throws ListIsEmptyException {
         ModernUnidirectionalLinkedList<String> linkedList  = new ModernUnidirectionalLinkedList<>();
 
-        linkedList.insertHead("Alex");
+
+
+        linkedList.add("Alex");
         System.out.print(linkedList + " ");
         System.out.println(linkedList.size());
 
-        linkedList.add("John");
+        linkedList.insertHead("John");
         System.out.print(linkedList + " ");
         System.out.println(linkedList.size());
 
@@ -40,11 +42,15 @@ public class Main {
         System.out.print(linkedList + " ");
         System.out.println(linkedList.size());
 
-        linkedList.remove("Alex");
+        linkedList.remove("John");
         System.out.print(linkedList + " ");
         System.out.println(linkedList.size());
 
         linkedList.add("Ann");
+        System.out.print(linkedList + " ");
+        System.out.println(linkedList.size());
+
+        linkedList.add("Mike");
         System.out.print(linkedList + " ");
         System.out.println(linkedList.size());
 
