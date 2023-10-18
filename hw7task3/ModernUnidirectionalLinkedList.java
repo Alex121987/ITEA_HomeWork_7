@@ -4,99 +4,153 @@ public class ModernUnidirectionalLinkedList<T> {
     private Node<T> first;
     private Node<T> last;
     private int size;
-    private int index;
+    private int indexOfNode;
 
     public ModernUnidirectionalLinkedList() {
         first = null;
         last = null;
         size = 0;
-        index = 0;
+        indexOfNode = 0;
     }
     //************************************************
     public int size() {
         return size;
     }
     public void add(final T element) {
-        if (first == null && last == null) {
-            first = new Node<>(element, null, index);
-            last = first;
-            size++;
-            index++;
+        if (size == 0) {
+            insertHead(element);
         } else {
-            Node<T> node = new Node<>(element, null, index);
+            Node<T> node = new Node<>(element, null, size);
             last.setNextNode(node);
             last = node;
             size++;
-            index++;
         }
-     }
-    public void add(final int index, final T data) {
-
-        if (index < 0 || index > size) {
-            throw new IndexOutOfBoundsException("Wrong index in method:".toUpperCase() + "add(final int index, final T data)!");
+    }
+    public void add(final int position, final T data) {
+        if (position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException("WRONG INDEX!");
         }
 
-        if (size == 0) {
-            first = new Node<>(data, null, index);
-            last = first;
-            size++;
-            this.index++;
-        } else if (index == 0) {
+        if (position == 0) {
             insertHead(data);
         } else {
-            Node<T> prevNode = first;
+            Node<T> previousNode = first;
             Node<T> currentNode = first;
 
-            while(currentNode.getIndexOfNode() != index) {
-                prevNode = currentNode;
+            while (currentNode.getIndexOfNode() != position) {
+                previousNode = currentNode;
                 currentNode = currentNode.getNextNode();
             }
 
-            Node<T> newNode = new Node<T>(data, currentNode, index);
-            prevNode.setNextNode(newNode);
-            size++;
+            Node<T> newNode = new Node<>(data, currentNode, position);
+            previousNode.setNextNode(newNode);
 
-            while(currentNode != null) {
+            while (currentNode != null) {
                 currentNode.setIndexOfNode(currentNode.getIndexOfNode() + 1);
                 currentNode = currentNode.getNextNode();
             }
+
+            size++;
         }
     }
-    public void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Wrong index in method:".toUpperCase() + "add(final int index, final T data)!");
+    public void remove(int position) throws ListIsEmptyException {
+        if (position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException("WRONG INDEX!");
         }
 
-        if (size == 1) {
-            first = null;
-            last = null;
-            size--;
-        } else {
-            Node<T> prevNode = first;
-            Node<T> current = first;
+        if (!listIsEmpty()) {
+            if (position == 0) {
+                removeFirstElement();
+            } else if (position == size - 1) {
+                removeLastElement();
+            } else {
+                Node<T> current = first.getNextNode();
+                Node<T> previous = first;
 
-            while(current.getIndexOfNode() != index) {
-                prevNode = current;
+                while(current.getIndexOfNode() != position) {
+                    previous = current;
+                    current = current.getNextNode();
+                }
+
+                previous.setNextNode(current.getNextNode());
+                current.setNextNode(null);
+
+                current = previous.getNextNode();
+                while (current != null) {
+                    current.setIndexOfNode(current.getIndexOfNode() - 1);
+                    current = current.getNextNode();
+                }
+
+                size--;
+            }
+        } else {
+            throw new ListIsEmptyException("List is empty!!!");
+        }
+    }
+
+    public void remove(T data) throws ListIsEmptyException {
+        Node<T> current = first;
+
+        try {
+            while (!current.getValue().toString().equals(data)) {
                 current = current.getNextNode();
             }
-
-            prevNode.setNextNode(current.getNextNode());
-            size--;
+        } catch (NullPointerException e) {
+            System.out.println("No such element " + data + " in collection");
         }
-    }
-    public void remove(T data) {
+
+        int position = current.getIndexOfNode();
+
+        if (current == first) {
+            removeFirstElement();
+        } else if (current == last) {
+            removeLastElement();
+        } else {
+            remove(position);
+        }
 
     }
     public void insertHead(T data) {
-        Node<T> currentNode = first;
-        Node<T> node = new Node<>(data, first, 0);
-        first = node;
-        size++;
-
-        while(currentNode != null) {
-            currentNode.setIndexOfNode(currentNode.getIndexOfNode() + 1);
-            currentNode = currentNode.getNextNode();
+        if (size == 0) {
+            first = new Node<>(data, null, 0);
+            last = first;
+            size++;
+        } else {
+            Node<T> newNode = new Node<>(data, first, 0);
+            first = newNode;
+            Node<T> temp = first.getNextNode();
+            while(temp != last.getNextNode()) {
+                temp.setIndexOfNode(temp.getIndexOfNode() + 1);
+                temp = temp.getNextNode();
+            }
+            size++;
         }
+    }
+
+    private void removeFirstElement() {
+        first = first.getNextNode();
+        Node<T> current = first;
+
+        while (current != null) {
+            current.setIndexOfNode(current.getIndexOfNode() - 1);
+            current = current.getNextNode();
+        }
+        size--;
+    }
+
+    private void removeLastElement() {
+        Node<T> current = first;
+
+        while (current.getNextNode() != last) {
+            current = current.getNextNode();
+        }
+        current.setNextNode(null);
+        last = current;
+        size--;
+    }
+
+    private boolean listIsEmpty() {
+        return first == null && last == null;
     }
 
     //**************************************************
@@ -124,12 +178,12 @@ public class ModernUnidirectionalLinkedList<T> {
         this.size = size;
     }
 
-    public int getIndex() {
-        return index;
+    public int getIndexOfNode() {
+        return indexOfNode;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setIndexOfNode(int indexOfNode) {
+        this.indexOfNode = indexOfNode;
     }
 
     @Override

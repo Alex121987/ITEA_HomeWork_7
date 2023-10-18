@@ -34,12 +34,4 @@ public class Node<T> {
     public void setIndexOfNode(int indexOfNode) {
         this.indexOfNode = indexOfNode;
     }
-
-    @Override
-    public String toString() {
-        return "Node{" +
-                "value=" + value +
-                ", indexOfNode=" + indexOfNode +
-                '}';
-    }
 }
