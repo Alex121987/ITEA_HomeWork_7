@@ -19,7 +19,7 @@ public class Main {
 
         System.out.println(myList.getSize());
 
-        System.out.println(myList.getElementByIndex(0)); //
+        System.out.println(myList.getElementByIndex(3)); //
 
         System.out.println(myList);
     }

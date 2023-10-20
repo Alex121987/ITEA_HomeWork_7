@@ -28,7 +28,7 @@ public class MyList<T> {
     }
 
     public T getElementByIndex(int indexToFind) {
-        return indexToFind >=  0 && indexToFind <= index ?   (T)container[index] : null;
+        return indexToFind >= 0 && indexToFind <= index ? (T)container[indexToFind] : null;
     }
 
     public int getSize() {
